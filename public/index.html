@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPSmart - Kalkulator IPS/IPK Mahasiswa</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="ph-fill ph-graduation-cap"></i>
+                <span>IPSmart</span>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-kalkulator">Kalkulator IPS</a></li>
+                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-simulasi">Simulasi Nilai</a></li>
+                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-prediksi">Prediksi IPK</a></li>
+                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-target">Target IPK</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <i class="ph ph-moon" id="theme-icon"></i>
+                </button>
+                <a href="#" class="btn btn-outline">Masuk</a>
+                <a href="#" class="btn btn-primary">Daftar Gratis</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="beranda">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-container">
+                <!-- Left Content -->
+                <div class="hero-content">
+                    <div class="badge">
+                        <i class="ph ph-sparkle"></i>
+                        Bantu rencanakan masa depan akademikmu
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        Hitung <span>IPS</span>-mu,<br>
+                        Raih Masa Depan Terbaik
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        IPSmart membantu mahasiswa menghitung IPS, memprediksi IPK, dan merencanakan target akademik dengan mudah dan akurat.
+                    </p>
+                    
+                    <div class="hero-buttons">
+                        <a href="#tools-section" class="btn btn-primary btn-lg">
+                            Mulai Gunakan Alat <i class="ph ph-arrow-right"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="trust-indicators">
+                        <div class="indicator">
+                            <i class="ph-fill ph-check-circle" style="color: var(--primary);"></i>
+                            <span>Gratis & Tanpa Iklan</span>
+                        </div>
+                        <div class="indicator">
+                            <i class="ph-fill ph-shield-check" style="color: #10B981;"></i>
+                            <span>Data Aman</span>
+                        </div>
+                        <div class="indicator">
+                            <i class="ph-fill ph-lightning" style="color: #F59E0B;"></i>
+                            <span>Hasil Instan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Content (Mockup Card) -->
+                <div class="hero-mockup">
+                    <div class="mockup-card">
+                        <div class="mockup-header">
+                            <h3>Ringkasan Semester</h3>
+                        </div>
+                        
+                        <div class="mockup-score-card">
+                            <div class="score-info">
+                                <span class="score-label">IPS Semester Ini</span>
+                                <div class="score-value">3.68</div>
+                                <div class="score-status">Sangat Memuaskan <i class="ph-fill ph-star"></i></div>
+                            </div>
+                            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/graduation-cap-and-diploma-4996160-4160455.png" alt="Graduation Cap" class="score-illustration">
+                        </div>
+
+                        <div class="mockup-stats">
+                            <div class="stat-box">
+                                <div class="stat-text">
+                                    <span class="stat-label">Total SKS</span>
+                                    <span class="stat-value">20</span>
+                                </div>
+                                <div class="stat-icon blue-bg">
+                                    <i class="ph ph-book-open"></i>
+                                </div>
+                            </div>
+                            <div class="stat-box">
+                                <div class="stat-text">
+                                    <span class="stat-label">Total Bobot</span>
+                                    <span class="stat-value">73.60</span>
+                                </div>
+                                <div class="stat-icon green-bg">
+                                    <i class="ph ph-chart-bar"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mockup-table-container">
+                            <h4>Mata Kuliah</h4>
+                            <table class="mockup-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mata Kuliah</th>
+                                        <th>SKS</th>
+                                        <th>Nilai</th>
+                                        <th>Bobot</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Algoritma dan Pemrograman</td>
+                                        <td>3</td>
+                                        <td>A</td>
+                                        <td>12.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Basis Data</td>
+                                        <td>3</td>
+                                        <td>B+</td>
+                                        <td>10.50</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Struktur Data</td>
+                                        <td>3</td>
+                                        <td>A-</td>
+                                        <td>11.25</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="features-container">
+                <div class="feature-card" onclick="document.querySelector('[data-target-tab=tab-kalkulator]').click()">
+                    <div class="feature-icon blue-light">
+                        <i class="ph ph-calculator"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Kalkulator IPS</h4>
+                        <p>Hitung IPS semester dengan mudah berdasarkan SKS dan nilai.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card" onclick="document.querySelector('[data-target-tab=tab-simulasi]').click()">
+                    <div class="feature-icon green-light">
+                        <i class="ph ph-trend-up"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Simulasi Nilai</h4>
+                        <p>Coba berbagai kemungkinan nilai dan lihat perubahan IPS-mu.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card" onclick="document.querySelector('[data-target-tab=tab-prediksi]').click()">
+                    <div class="feature-icon purple-light">
+                        <i class="ph ph-chart-pie-slice"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Prediksi IPK</h4>
+                        <p>Prediksi IPK-mu di masa depan berdasarkan data yang ada.</p>
+                    </div>
+                </div>
+                
+                <div class="feature-card" onclick="document.querySelector('[data-target-tab=tab-target]').click()">
+                    <div class="feature-icon orange-light">
+                        <i class="ph ph-target"></i>
+                    </div>
+                    <div class="feature-text">
+                        <h4>Target IPK</h4>
+                        <p>Tentukan target IPK dan dapatkan rekomendasi IPS yang dibutuhkan.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Tools Section (Tabbed Interface) -->
+    <section id="tools-section" class="tools-section">
+        <div class="tools-container">
+            <div class="tools-header">
+                <h2>Pusat <span>Alat Akademik</span></h2>
+                <p>Pilih alat yang Anda butuhkan untuk membantu merencanakan strategi akademik Anda.</p>
+            </div>
+            
+            <div class="tools-card">
+                <!-- Tab Navigation -->
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="tab-kalkulator"><i class="ph ph-calculator"></i> Kalkulator IPS</button>
+                    <button class="tab-btn" data-tab="tab-simulasi"><i class="ph ph-trend-up"></i> Simulasi Nilai</button>
+                    <button class="tab-btn" data-tab="tab-prediksi"><i class="ph ph-chart-pie-slice"></i> Prediksi IPK</button>
+                    <button class="tab-btn" data-tab="tab-target"><i class="ph ph-target"></i> Target IPK</button>
+                </div>
+
+                <!-- TAB 1: Kalkulator IPS -->
+                <div id="tab-kalkulator" class="tab-content active">
+                    <div class="tab-desc">
+                        <h3>Kalkulator IPS</h3>
+                        <p>Masukkan daftar mata kuliah beserta SKS dan Nilai yang didapatkan untuk menghitung Indeks Prestasi Semester Anda secara akurat.</p>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="calc-table" id="calc-table">
+                            <thead>
+                                <tr>
+                                    <th width="50%">Mata Kuliah</th>
+                                    <th width="20%">SKS</th>
+                                    <th width="20%">Nilai</th>
+                                    <th width="10%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="course-list">
+                                <!-- JS akan menambahkan baris default disini -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tools-actions">
+                        <button id="add-course-btn" class="btn btn-outline">
+                            <i class="ph ph-plus"></i> Tambah Mata Kuliah
+                        </button>
+                        <button id="calculate-btn" class="btn btn-primary">
+                            Hitung IPS <i class="ph ph-calculator"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="tools-result">
+                        <div class="result-item">
+                            <div class="result-icon blue-bg"><i class="ph ph-book-open"></i></div>
+                            <div class="result-text">
+                                <span class="result-label">Total SKS</span>
+                                <span class="result-value" id="total-sks-result">0</span>
+                            </div>
+                        </div>
+                        <div class="result-item highlight">
+                            <div class="result-icon green-bg"><i class="ph ph-graduation-cap"></i></div>
+                            <div class="result-text">
+                                <span class="result-label">IPS Anda</span>
+                                <span class="result-value" id="ips-result">0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: Simulasi Nilai -->
+                <div id="tab-simulasi" class="tab-content">
+                    <div class="tab-desc">
+                        <h3>Simulasi Nilai</h3>
+                        <p>Perkirakan IPS Anda dengan mencoba kemungkinan nilai pada mata kuliah yang belum keluar hasil akhirnya.</p>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="calc-table" id="sim-table">
+                            <thead>
+                                <tr>
+                                    <th width="45%">Mata Kuliah</th>
+                                    <th width="15%">SKS</th>
+                                    <th width="25%">Status Nilai</th>
+                                    <th width="15%">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sim-course-list">
+                                <!-- JS akan menambahkan baris default disini -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="tools-actions">
+                        <button id="sim-add-course-btn" class="btn btn-outline">
+                            <i class="ph ph-plus"></i> Tambah Mata Kuliah
+                        </button>
+                    </div>
+
+                    <div class="simulasi-scenarios">
+                        <h4><i class="ph ph-list-numbers"></i> Perbandingan Skenario</h4>
+                        <p class="scenario-desc">Jika mata kuliah yang "Belum Keluar" mendapatkan nilai:</p>
+                        
+                        <div class="scenario-grid" id="scenario-results">
+                            <!-- Skenario akan di-render oleh JS -->
+                            <div class="scenario-box">Isi data di atas untuk melihat skenario.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: Prediksi IPK -->
+                <div id="tab-prediksi" class="tab-content">
+                    <div class="tab-desc">
+                        <h3>Prediksi IPK</h3>
+                        <p>Ketahui estimasi IPK kumulatif Anda setelah menyelesaikan semester ini.</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>IPK Saat Ini</label>
+                            <input type="number" id="pred-ipk-lama" placeholder="Contoh: 3.42" step="0.01" min="0" max="4">
+                        </div>
+                        <div class="form-group">
+                            <label>Total SKS Ditempuh</label>
+                            <input type="number" id="pred-sks-lama" placeholder="Contoh: 80" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Prediksi IPS Semester Ini</label>
+                            <input type="number" id="pred-ips-baru" placeholder="Contoh: 3.80" step="0.01" min="0" max="4">
+                        </div>
+                        <div class="form-group">
+                            <label>SKS Semester Ini</label>
+                            <input type="number" id="pred-sks-baru" placeholder="Contoh: 20" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="tools-actions" style="justify-content: flex-end;">
+                        <button id="btn-prediksi" class="btn btn-primary">
+                            Hitung Prediksi IPK <i class="ph ph-chart-pie-slice"></i>
+                        </button>
+                    </div>
+
+                    <div class="prediksi-result" id="pred-result-box" style="display: none;">
+                        <div class="prediksi-cards">
+                            <div class="pred-card neutral">
+                                <span>IPK Saat Ini</span>
+                                <strong id="res-ipk-lama">0.00</strong>
+                            </div>
+                            <div class="pred-card primary">
+                                <span>Prediksi IPK Baru</span>
+                                <strong id="res-ipk-baru">0.00</strong>
+                            </div>
+                            <div class="pred-card" id="res-ipk-diff-card">
+                                <span>Perubahan</span>
+                                <strong id="res-ipk-diff">0.00</strong>
+                            </div>
+                        </div>
+                        <div class="prediksi-status" id="pred-status">
+                            <!-- Status peningkatan/penurunan -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: Target IPK -->
+                <div id="tab-target" class="tab-content">
+                    <div class="tab-desc">
+                        <h3>Target IPK</h3>
+                        <p>Cari tahu berapa rata-rata IPS per semester yang harus Anda capai untuk meraih target IPK kelulusan.</p>
+                    </div>
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>IPK Saat Ini</label>
+                            <input type="number" id="tgt-ipk-lama" placeholder="Contoh: 3.30" step="0.01" min="0" max="4">
+                        </div>
+                        <div class="form-group">
+                            <label>Total SKS Ditempuh</label>
+                            <input type="number" id="tgt-sks-lama" placeholder="Contoh: 60" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Sisa Semester</label>
+                            <input type="number" id="tgt-sisa-smt" placeholder="Contoh: 4" min="1" max="10">
+                        </div>
+                        <div class="form-group">
+                            <label>Perkiraan SKS per Semester</label>
+                            <input type="number" id="tgt-sks-per-smt" placeholder="Contoh: 20" min="1">
+                        </div>
+                        <div class="form-group target-highlight">
+                            <label>Target IPK Kelulusan</label>
+                            <input type="number" id="tgt-ipk-target" placeholder="Contoh: 3.60" step="0.01" min="0" max="4">
+                        </div>
+                    </div>
+                    
+                    <div class="tools-actions" style="justify-content: flex-end;">
+                        <button id="btn-target" class="btn btn-primary">
+                            Analisis Target <i class="ph ph-target"></i>
+                        </button>
+                    </div>
+
+                    <div class="target-result" id="tgt-result-box" style="display: none;">
+                        <div class="target-summary">
+                            <div class="tgt-main-res">
+                                <span>Rata-rata IPS Dibutuhkan</span>
+                                <h3 id="res-tgt-ips">0.00</h3>
+                            </div>
+                            <div class="tgt-difficulty" id="res-tgt-diff">
+                                <!-- Tingkat kesulitan -->
+                            </div>
+                        </div>
+                        <div class="target-breakdown" id="tgt-breakdown">
+                            <!-- Simulasi per semester -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 IPSmart. Dibuat untuk mahasiswa.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
