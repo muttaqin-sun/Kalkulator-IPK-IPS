@@ -38,11 +38,29 @@
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
                     <i class="ph ph-moon" id="theme-icon"></i>
                 </button>
-                <a href="#" class="btn btn-outline">Masuk</a>
-                <a href="#" class="btn btn-primary">Daftar Gratis</a>
+                <a href="#" class="btn btn-outline hide-mobile">Masuk</a>
+                <a href="#" class="btn btn-primary hide-mobile">Daftar Gratis</a>
+                <button id="mobile-menu-toggle" class="icon-btn show-mobile" aria-label="Menu">
+                    <i class="ph ph-list" id="menu-icon"></i>
+                </button>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html#beranda" class="mobile-nav-link">Beranda</a></li>
+            <li><a href="index.html?tab=tab-kalkulator#tools-section" class="mobile-nav-link">Kalkulator IPS</a></li>
+            <li><a href="index.html?tab=tab-prediksi#tools-section" class="mobile-nav-link">Prediksi IPK</a></li>
+            <li><a href="index.html?tab=tab-target#tools-section" class="mobile-nav-link">Target IPK</a></li>
+            <li><a href="tentang.html" class="mobile-nav-link active">Tentang</a></li>
+        </ul>
+        <div class="mobile-menu-actions">
+            <a href="#" class="btn btn-outline">Masuk</a>
+            <a href="#" class="btn btn-primary">Daftar Gratis</a>
+        </div>
+    </div>
 
     <main class="about-section">
         <div class="about-container">

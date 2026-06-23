@@ -38,11 +38,29 @@
                 <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
                     <i class="ph ph-moon" id="theme-icon"></i>
                 </button>
-                <a href="#" class="btn btn-outline">Masuk</a>
-                <a href="#" class="btn btn-primary">Daftar Gratis</a>
+                <a href="#" class="btn btn-outline hide-mobile">Masuk</a>
+                <a href="#" class="btn btn-primary hide-mobile">Daftar Gratis</a>
+                <button id="mobile-menu-toggle" class="icon-btn show-mobile" aria-label="Menu">
+                    <i class="ph ph-list" id="menu-icon"></i>
+                </button>
             </div>
         </div>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <ul class="mobile-nav-links">
+            <li><a href="#beranda" class="mobile-nav-link active">Beranda</a></li>
+            <li><a href="#tools-section" class="mobile-nav-link" data-target-tab="tab-kalkulator">Kalkulator IPS</a></li>
+            <li><a href="#tools-section" class="mobile-nav-link" data-target-tab="tab-prediksi">Prediksi IPK</a></li>
+            <li><a href="#tools-section" class="mobile-nav-link" data-target-tab="tab-target">Target IPK Lulus</a></li>
+            <li><a href="tentang.html" class="mobile-nav-link">Tentang</a></li>
+        </ul>
+        <div class="mobile-menu-actions">
+            <a href="#" class="btn btn-outline">Masuk</a>
+            <a href="#" class="btn btn-primary">Daftar Gratis</a>
+        </div>
+    </div>
 
     <main id="beranda">
         <!-- Hero Section -->
