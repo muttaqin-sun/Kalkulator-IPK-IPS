@@ -29,9 +29,9 @@
             <ul class="nav-links">
                 <li><a href="#beranda" class="nav-link active">Beranda</a></li>
                 <li><a href="#tools-section" class="nav-link" data-target-tab="tab-kalkulator">Kalkulator IPS</a></li>
-                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-simulasi">Simulasi Nilai</a></li>
                 <li><a href="#tools-section" class="nav-link" data-target-tab="tab-prediksi">Prediksi IPK</a></li>
-                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-target">Target IPK</a></li>
+                <li><a href="#tools-section" class="nav-link" data-target-tab="tab-target">Target IPK Lulus</a></li>
+                <li><a href="tentang.html" class="nav-link">Tentang</a></li>
             </ul>
 
             <div class="nav-actions">
@@ -163,7 +163,7 @@
 
         <!-- Features Section -->
         <section class="features">
-            <div class="features-container">
+            <div class="features-container" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="feature-card" onclick="document.querySelector('[data-target-tab=tab-kalkulator]').click()">
                     <div class="feature-icon blue-light">
                         <i class="ph ph-calculator"></i>
@@ -171,16 +171,6 @@
                     <div class="feature-text">
                         <h4>Kalkulator IPS</h4>
                         <p>Hitung IPS semester dengan mudah berdasarkan SKS dan nilai.</p>
-                    </div>
-                </div>
-                
-                <div class="feature-card" onclick="document.querySelector('[data-target-tab=tab-simulasi]').click()">
-                    <div class="feature-icon green-light">
-                        <i class="ph ph-trend-up"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h4>Simulasi Nilai</h4>
-                        <p>Coba berbagai kemungkinan nilai dan lihat perubahan IPS-mu.</p>
                     </div>
                 </div>
                 
@@ -199,8 +189,8 @@
                         <i class="ph ph-target"></i>
                     </div>
                     <div class="feature-text">
-                        <h4>Target IPK</h4>
-                        <p>Tentukan target IPK dan dapatkan rekomendasi IPS yang dibutuhkan.</p>
+                        <h4>Target IPK Lulus</h4>
+                        <p>Ketahui apakah target IPK lulus Anda realistis untuk dicapai.</p>
                     </div>
                 </div>
             </div>
@@ -217,11 +207,10 @@
             
             <div class="tools-card">
                 <!-- Tab Navigation -->
-                <div class="tab-nav">
+                <div class="tab-nav" style="grid-template-columns: repeat(3, 1fr); display: grid;">
                     <button class="tab-btn active" data-tab="tab-kalkulator"><i class="ph ph-calculator"></i> Kalkulator IPS</button>
-                    <button class="tab-btn" data-tab="tab-simulasi"><i class="ph ph-trend-up"></i> Simulasi Nilai</button>
                     <button class="tab-btn" data-tab="tab-prediksi"><i class="ph ph-chart-pie-slice"></i> Prediksi IPK</button>
-                    <button class="tab-btn" data-tab="tab-target"><i class="ph ph-target"></i> Target IPK</button>
+                    <button class="tab-btn" data-tab="tab-target"><i class="ph ph-target"></i> Target IPK Lulus</button>
                 </div>
 
                 <!-- TAB 1: Kalkulator IPS -->
@@ -274,47 +263,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: Simulasi Nilai -->
-                <div id="tab-simulasi" class="tab-content">
-                    <div class="tab-desc">
-                        <h3>Simulasi Nilai</h3>
-                        <p>Perkirakan IPS Anda dengan mencoba kemungkinan nilai pada mata kuliah yang belum keluar hasil akhirnya.</p>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table class="calc-table" id="sim-table">
-                            <thead>
-                                <tr>
-                                    <th width="45%">Mata Kuliah</th>
-                                    <th width="15%">SKS</th>
-                                    <th width="25%">Status Nilai</th>
-                                    <th width="15%">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="sim-course-list">
-                                <!-- JS akan menambahkan baris default disini -->
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <div class="tools-actions">
-                        <button id="sim-add-course-btn" class="btn btn-outline">
-                            <i class="ph ph-plus"></i> Tambah Mata Kuliah
-                        </button>
-                    </div>
-
-                    <div class="simulasi-scenarios">
-                        <h4><i class="ph ph-list-numbers"></i> Perbandingan Skenario</h4>
-                        <p class="scenario-desc">Jika mata kuliah yang "Belum Keluar" mendapatkan nilai:</p>
-                        
-                        <div class="scenario-grid" id="scenario-results">
-                            <!-- Skenario akan di-render oleh JS -->
-                            <div class="scenario-box">Isi data di atas untuk melihat skenario.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- TAB 3: Prediksi IPK -->
+                <!-- TAB 2: Prediksi IPK -->
                 <div id="tab-prediksi" class="tab-content">
                     <div class="tab-desc">
                         <h3>Prediksi IPK</h3>
@@ -367,33 +316,29 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: Target IPK -->
+                <!-- TAB 3: Target IPK Saat Lulus -->
                 <div id="tab-target" class="tab-content">
                     <div class="tab-desc">
-                        <h3>Target IPK</h3>
-                        <p>Cari tahu berapa rata-rata IPS per semester yang harus Anda capai untuk meraih target IPK kelulusan.</p>
+                        <h3>Target IPK Saat Lulus</h3>
+                        <p>Cari tahu apakah target IPK lulus Anda masih realistis dan berapa rata-rata IPS yang harus Anda kejar di sisa masa studi.</p>
                     </div>
                     
                     <div class="form-grid">
                         <div class="form-group">
                             <label>IPK Saat Ini</label>
-                            <input type="number" id="tgt-ipk-lama" placeholder="Contoh: 3.30" step="0.01" min="0" max="4">
+                            <input type="number" id="tgt-ipk-lama" placeholder="Contoh: 3.00" step="0.01" min="0" max="4">
                         </div>
                         <div class="form-group">
-                            <label>Total SKS Ditempuh</label>
-                            <input type="number" id="tgt-sks-lama" placeholder="Contoh: 60" min="1">
+                            <label>Total SKS yang Sudah Ditempuh</label>
+                            <input type="number" id="tgt-sks-lama" placeholder="Contoh: 80" min="1">
                         </div>
                         <div class="form-group">
-                            <label>Sisa Semester</label>
-                            <input type="number" id="tgt-sisa-smt" placeholder="Contoh: 4" min="1" max="10">
-                        </div>
-                        <div class="form-group">
-                            <label>Perkiraan SKS per Semester</label>
-                            <input type="number" id="tgt-sks-per-smt" placeholder="Contoh: 20" min="1">
+                            <label>Total SKS Program Studi (Hingga Lulus)</label>
+                            <input type="number" id="tgt-sks-total" placeholder="Contoh: 144" min="1">
                         </div>
                         <div class="form-group target-highlight">
-                            <label>Target IPK Kelulusan</label>
-                            <input type="number" id="tgt-ipk-target" placeholder="Contoh: 3.60" step="0.01" min="0" max="4">
+                            <label>Target IPK Saat Lulus</label>
+                            <input type="number" id="tgt-ipk-target" placeholder="Contoh: 3.50" step="0.01" min="0" max="4">
                         </div>
                     </div>
                     
@@ -404,17 +349,36 @@
                     </div>
 
                     <div class="target-result" id="tgt-result-box" style="display: none;">
-                        <div class="target-summary">
-                            <div class="tgt-main-res">
-                                <span>Rata-rata IPS Dibutuhkan</span>
+                        <div class="target-summary-panel">
+                            <div class="tgt-stats-grid">
+                                <div class="tgt-stat">
+                                    <span>Target IPK</span>
+                                    <strong id="res-tgt-target">0.00</strong>
+                                </div>
+                                <div class="tgt-stat">
+                                    <span>IPK Saat Ini</span>
+                                    <strong id="res-tgt-current">0.00</strong>
+                                </div>
+                                <div class="tgt-stat">
+                                    <span>SKS Ditempuh</span>
+                                    <strong id="res-tgt-sks-done">0</strong>
+                                </div>
+                                <div class="tgt-stat">
+                                    <span>Sisa SKS</span>
+                                    <strong id="res-tgt-sks-left">0</strong>
+                                </div>
+                            </div>
+                            
+                            <div class="tgt-main-requirement">
+                                <span>IPS Rata-rata yang Dibutuhkan</span>
                                 <h3 id="res-tgt-ips">0.00</h3>
                             </div>
-                            <div class="tgt-difficulty" id="res-tgt-diff">
-                                <!-- Tingkat kesulitan -->
+                            
+                            <div class="tgt-status-box" id="res-tgt-status-box">
+                                <span>Status:</span>
+                                <div class="tgt-status-text" id="res-tgt-diff">Status Placeholder</div>
+                                <p class="tgt-status-reason" id="res-tgt-reason">Alasan placeholder</p>
                             </div>
-                        </div>
-                        <div class="target-breakdown" id="tgt-breakdown">
-                            <!-- Simulasi per semester -->
                         </div>
                     </div>
                 </div>

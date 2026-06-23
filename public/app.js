@@ -1,23 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     // --- 1. THEME TOGGLE (Dark Mode) ---
     const themeToggleBtn = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
     const htmlEl = document.documentElement;
-
+    
     const savedTheme = localStorage.getItem('theme') || 'light';
     htmlEl.setAttribute('data-theme', savedTheme);
-    updateThemeIcon(savedTheme);
+    if (themeIcon) {
+        updateThemeIcon(savedTheme);
+    }
 
-    themeToggleBtn.addEventListener('click', () => {
-        const currentTheme = htmlEl.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        htmlEl.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
-    });
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = htmlEl.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlEl.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+    }
 
     function updateThemeIcon(theme) {
+        if (!themeIcon) return;
         if (theme === 'dark') {
             themeIcon.classList.remove('ph-moon');
             themeIcon.classList.add('ph-sun');
@@ -33,37 +38,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    // Scroll Spy for main sections
-    window.addEventListener('scroll', () => {
+    // Function to update active navbar links based on scroll and active tab
+    function updateNavLinks() {
+        if (sections.length === 0 || navLinks.length === 0) return;
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            if (scrollY >= (sectionTop - 200)) {
+            if (window.scrollY >= (sectionTop - 250)) {
                 current = section.getAttribute('id');
             }
         });
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === `#${current}`) {
-                link.classList.add('active');
+            if (current === 'tools-section') {
+                const activeTabBtn = document.querySelector('.tab-btn.active');
+                const activeTab = activeTabBtn ? activeTabBtn.dataset.tab : 'tab-kalkulator';
+                if (link.dataset.targetTab === activeTab) {
+                    link.classList.add('active');
+                }
+            } else {
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
             }
         });
-    });
+    }
+
+    // Scroll Spy for main sections
+    if (sections.length > 0) {
+        window.addEventListener('scroll', updateNavLinks);
+    }
 
     // Tab Switching Logic
     function switchTab(tabId) {
         // Update Buttons
         tabBtns.forEach(btn => {
             btn.classList.remove('active');
-            if (btn.dataset.tab === tabId) btn.classList.add('active');
+            if(btn.dataset.tab === tabId) btn.classList.add('active');
         });
-
+        
         // Update Content
         tabContents.forEach(content => {
             content.classList.remove('active');
-            if (content.id === tabId) content.classList.add('active');
+            if(content.id === tabId) content.classList.add('active');
         });
+
+        // Sync Nav Links active state
+        updateNavLinks();
     }
 
     // Event listener for tab buttons
@@ -75,23 +97,30 @@ document.addEventListener('DOMContentLoaded', () => {
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             const targetTab = link.dataset.targetTab;
-            if (targetTab) {
+            if(targetTab) {
                 switchTab(targetTab);
             }
         });
     });
 
+    // Handle URL parameters for tab selection on load
+    const urlParams = new URLSearchParams(window.location.search);
+    const tabParam = urlParams.get('tab');
+    if (tabParam) {
+        const targetTabEl = document.getElementById(tabParam);
+        if (targetTabEl) {
+            switchTab(tabParam);
+        }
+    }
+
     // --- 3. COMMON GRADE DATA ---
     const gradePoints = {
-        'A': 4.00, 'A-': 3.50, 'B+': 3.25, 'B': 3.00,
+        'A': 4.00, 'A-': 3.50, 'B+': 3.25, 'B': 3.00, 
         'B-': 2.75, 'C+': 2.50, 'C': 2.00, 'D': 1.00, 'E': 0.00
     };
 
-    const getGradeOptions = (includeUnknown = false) => {
+    const getGradeOptions = () => {
         let options = '<option value="" disabled selected>Pilih Nilai</option>';
-        if (includeUnknown) {
-            options += '<option value="unknown">Belum Keluar</option>';
-        }
         for (const [grade, point] of Object.entries(gradePoints)) {
             options += `<option value="${point}">${grade}</option>`;
         }
@@ -108,229 +137,212 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. KALKULATOR IPS LOGIC ---
     const courseList = document.getElementById('course-list');
+    const addCourseBtn = document.getElementById('add-course-btn');
+    const calculateBtn = document.getElementById('calculate-btn');
+    
+    if (courseList) {
+        const addCourseRow = () => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><input type="text" placeholder="Contoh: Algoritma & Pemrograman" class="course-name"></td>
+                <td><select class="course-sks">${getSksOptions()}</select></td>
+                <td><select class="course-grade">${getGradeOptions()}</select></td>
+                <td><button class="btn-icon delete-row-btn" aria-label="Hapus"><i class="ph ph-trash"></i></button></td>
+            `;
+            courseList.appendChild(tr);
+            tr.querySelector('.delete-row-btn').addEventListener('click', () => tr.remove());
+        };
 
-    const addCourseRow = () => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><input type="text" placeholder="Contoh: Algoritma & Pemrograman" class="course-name"></td>
-            <td><select class="course-sks">${getSksOptions()}</select></td>
-            <td><select class="course-grade">${getGradeOptions()}</select></td>
-            <td><button class="btn-icon delete-row-btn" aria-label="Hapus"><i class="ph ph-trash"></i></button></td>
-        `;
-        courseList.appendChild(tr);
-        tr.querySelector('.delete-row-btn').addEventListener('click', () => tr.remove());
-    };
+        for (let i = 0; i < 3; i++) addCourseRow();
+        
+        if (addCourseBtn) {
+            addCourseBtn.addEventListener('click', addCourseRow);
+        }
 
-    for (let i = 0; i < 3; i++) addCourseRow();
-    document.getElementById('add-course-btn').addEventListener('click', addCourseRow);
+        if (calculateBtn) {
+            calculateBtn.addEventListener('click', () => {
+                const rows = courseList.querySelectorAll('tr');
+                let totalSks = 0; let totalBobot = 0;
+                rows.forEach(row => {
+                    const sksSelect = row.querySelector('.course-sks');
+                    const gradeSelect = row.querySelector('.course-grade');
+                    if (sksSelect && gradeSelect) {
+                        const sks = parseInt(sksSelect.value);
+                        const grade = parseFloat(gradeSelect.value);
+                        if (!isNaN(sks) && !isNaN(grade)) {
+                            totalSks += sks;
+                            totalBobot += (sks * grade);
+                        }
+                    }
+                });
+                const ips = totalSks > 0 ? (totalBobot / totalSks) : 0;
+                const totalSksResult = document.getElementById('total-sks-result');
+                const ipsResult = document.getElementById('ips-result');
+                if (totalSksResult) totalSksResult.textContent = totalSks;
+                if (ipsResult) ipsResult.textContent = ips.toFixed(2);
+            });
+        }
+    }
 
-    document.getElementById('calculate-btn').addEventListener('click', () => {
-        const rows = courseList.querySelectorAll('tr');
-        let totalSks = 0; let totalBobot = 0;
-        rows.forEach(row => {
-            const sks = parseInt(row.querySelector('.course-sks').value);
-            const grade = parseFloat(row.querySelector('.course-grade').value);
-            if (!isNaN(sks) && !isNaN(grade)) {
-                totalSks += sks;
-                totalBobot += (sks * grade);
+    // --- 5. PREDIKSI IPK LOGIC ---
+    const btnPrediksi = document.getElementById('btn-prediksi');
+    if (btnPrediksi) {
+        btnPrediksi.addEventListener('click', () => {
+            const predIpkLama = document.getElementById('pred-ipk-lama');
+            const predSksLama = document.getElementById('pred-sks-lama');
+            const predIpsBaru = document.getElementById('pred-ips-baru');
+            const predSksBaru = document.getElementById('pred-sks-baru');
+            
+            if (!predIpkLama || !predSksLama || !predIpsBaru || !predSksBaru) return;
+
+            const ipkLama = parseFloat(predIpkLama.value);
+            const sksLama = parseInt(predSksLama.value);
+            const ipsBaru = parseFloat(predIpsBaru.value);
+            const sksBaru = parseInt(predSksBaru.value);
+
+            if(isNaN(ipkLama) || isNaN(sksLama) || isNaN(ipsBaru) || isNaN(sksBaru)) {
+                alert('Harap isi semua kolom Prediksi IPK dengan angka yang valid.');
+                return;
             }
-        });
-        const ips = totalSks > 0 ? (totalBobot / totalSks) : 0;
-        document.getElementById('total-sks-result').textContent = totalSks;
-        document.getElementById('ips-result').textContent = ips.toFixed(2);
-    });
 
-    // --- 5. SIMULASI NILAI LOGIC ---
-    const simCourseList = document.getElementById('sim-course-list');
+            const bobotLama = ipkLama * sksLama;
+            const bobotBaru = ipsBaru * sksBaru;
+            const totalSks = sksLama + sksBaru;
+            const ipkBaru = (bobotLama + bobotBaru) / totalSks;
+            
+            const diff = ipkBaru - ipkLama;
 
-    const addSimCourseRow = () => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td><input type="text" placeholder="Mata Kuliah" class="sim-course-name"></td>
-            <td><select class="sim-course-sks">${getSksOptions()}</select></td>
-            <td><select class="sim-course-grade">${getGradeOptions(true)}</select></td>
-            <td><button class="btn-icon delete-row-btn"><i class="ph ph-trash"></i></button></td>
-        `;
-        simCourseList.appendChild(tr);
-        tr.querySelector('.delete-row-btn').addEventListener('click', () => {
-            tr.remove();
-            calculateSimulasi(); // Auto recalc
-        });
-        // Auto recalc on change
-        tr.querySelectorAll('select').forEach(el => el.addEventListener('change', calculateSimulasi));
-    };
+            const predResultBox = document.getElementById('pred-result-box');
+            if (predResultBox) predResultBox.style.display = 'block';
+            
+            const resIpkLama = document.getElementById('res-ipk-lama');
+            const resIpkBaru = document.getElementById('res-ipk-baru');
+            if (resIpkLama) resIpkLama.textContent = ipkLama.toFixed(2);
+            if (resIpkBaru) resIpkBaru.textContent = ipkBaru.toFixed(2);
+            
+            const diffCard = document.getElementById('res-ipk-diff-card');
+            const diffText = document.getElementById('res-ipk-diff');
+            const statusBox = document.getElementById('pred-status');
 
-    for (let i = 0; i < 3; i++) addSimCourseRow();
-    document.getElementById('sim-add-course-btn').addEventListener('click', addSimCourseRow);
-
-    function calculateSimulasi() {
-        const rows = simCourseList.querySelectorAll('tr');
-        let knownSks = 0;
-        let knownBobot = 0;
-        let unknownSks = 0;
-
-        rows.forEach(row => {
-            const sks = parseInt(row.querySelector('.sim-course-sks').value);
-            const gradeVal = row.querySelector('.sim-course-grade').value;
-
-            if (!isNaN(sks)) {
-                if (gradeVal === 'unknown') {
-                    unknownSks += sks;
-                } else if (gradeVal !== "") {
-                    const gradePoint = parseFloat(gradeVal);
-                    knownSks += sks;
-                    knownBobot += (sks * gradePoint);
+            if (diffCard) {
+                diffCard.className = 'pred-card';
+                if (diff > 0) {
+                    diffCard.classList.add('up');
+                    if (diffText) diffText.textContent = '+' + diff.toFixed(2);
+                    if (statusBox) {
+                        statusBox.className = 'prediksi-status positive';
+                        statusBox.innerHTML = '<i class="ph ph-trend-up"></i> Pertahankan kerjamu! IPK-mu diprediksi akan naik.';
+                    }
+                } else if (diff < 0) {
+                    diffCard.classList.add('down');
+                    if (diffText) diffText.textContent = diff.toFixed(2);
+                    if (statusBox) {
+                        statusBox.className = 'prediksi-status negative';
+                        statusBox.innerHTML = '<i class="ph ph-trend-down"></i> Hati-hati! IPK-mu diprediksi akan turun.';
+                    }
+                } else {
+                    if (diffText) diffText.textContent = '0.00';
+                    if (statusBox) {
+                        statusBox.className = 'prediksi-status';
+                        statusBox.innerHTML = '<i class="ph ph-minus"></i> IPK-mu diprediksi stabil.';
+                    }
                 }
             }
         });
-
-        const resultsContainer = document.getElementById('scenario-results');
-
-        if (unknownSks === 0 && knownSks === 0) {
-            resultsContainer.innerHTML = '<div class="scenario-box">Isi data di atas untuk melihat skenario.</div>';
-            return;
-        }
-
-        if (unknownSks === 0 && knownSks > 0) {
-            const ips = knownBobot / knownSks;
-            resultsContainer.innerHTML = `
-                <div class="scenario-box" style="grid-column: 1 / -1;">
-                    <span class="sc-ips">Semua nilai sudah diketahui. IPS Anda: <strong style="color:var(--primary);">${ips.toFixed(2)}</strong></span>
-                </div>`;
-            return;
-        }
-
-        // Hitung skenario
-        let html = '';
-        const gradesToSimulate = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D'];
-
-        gradesToSimulate.forEach(grade => {
-            const point = gradePoints[grade];
-            const totalSksAll = knownSks + unknownSks;
-            const totalBobotAll = knownBobot + (unknownSks * point);
-            const scenarioIps = totalBobotAll / totalSksAll;
-
-            html += `
-                <div class="scenario-box">
-                    <span class="sc-grade">${grade}</span>
-                    <span class="sc-ips">IPS: ${scenarioIps.toFixed(2)}</span>
-                </div>
-            `;
-        });
-
-        resultsContainer.innerHTML = html;
     }
 
-    // --- 6. PREDIKSI IPK LOGIC ---
-    document.getElementById('btn-prediksi').addEventListener('click', () => {
-        const ipkLama = parseFloat(document.getElementById('pred-ipk-lama').value);
-        const sksLama = parseInt(document.getElementById('pred-sks-lama').value);
-        const ipsBaru = parseFloat(document.getElementById('pred-ips-baru').value);
-        const sksBaru = parseInt(document.getElementById('pred-sks-baru').value);
+    // --- 6. TARGET IPK LULUS LOGIC ---
+    const btnTarget = document.getElementById('btn-target');
+    if (btnTarget) {
+        btnTarget.addEventListener('click', () => {
+            const tgtIpkLama = document.getElementById('tgt-ipk-lama');
+            const tgtSksLama = document.getElementById('tgt-sks-lama');
+            const tgtSksTotal = document.getElementById('tgt-sks-total');
+            const tgtIpkTarget = document.getElementById('tgt-ipk-target');
 
-        if (isNaN(ipkLama) || isNaN(sksLama) || isNaN(ipsBaru) || isNaN(sksBaru)) {
-            alert('Harap isi semua kolom Prediksi IPK dengan angka yang valid.');
-            return;
-        }
+            if (!tgtIpkLama || !tgtSksLama || !tgtSksTotal || !tgtIpkTarget) return;
 
-        const bobotLama = ipkLama * sksLama;
-        const bobotBaru = ipsBaru * sksBaru;
-        const totalSks = sksLama + sksBaru;
-        const ipkBaru = (bobotLama + bobotBaru) / totalSks;
+            const ipkLama = parseFloat(tgtIpkLama.value);
+            const sksLama = parseInt(tgtSksLama.value);
+            const sksTotal = parseInt(tgtSksTotal.value);
+            const targetIpk = parseFloat(tgtIpkTarget.value);
 
-        const diff = ipkBaru - ipkLama;
+            // Validations
+            if(isNaN(ipkLama) || isNaN(sksLama) || isNaN(sksTotal) || isNaN(targetIpk)) {
+                alert('Harap isi semua kolom dengan angka yang valid.');
+                return;
+            }
+            if (ipkLama < 0 || sksLama < 0 || sksTotal < 0 || targetIpk < 0) {
+                alert('Nilai tidak boleh negatif.');
+                return;
+            }
+            if (targetIpk > 4.00) {
+                alert('Target IPK tidak boleh lebih dari 4.00.');
+                return;
+            }
+            if (sksLama >= sksTotal) {
+                alert('Total SKS yang sudah ditempuh tidak boleh sama atau lebih besar dari total SKS lulus.');
+                return;
+            }
 
-        document.getElementById('pred-result-box').style.display = 'block';
-        document.getElementById('res-ipk-lama').textContent = ipkLama.toFixed(2);
-        document.getElementById('res-ipk-baru').textContent = ipkBaru.toFixed(2);
+            const totalMutuSaatIni = ipkLama * sksLama;
+            const targetMutu = targetIpk * sksTotal;
+            const mutuTambahan = targetMutu - totalMutuSaatIni;
+            const sisaSKS = sksTotal - sksLama;
+            const ipsDibutuhkan = mutuTambahan / sisaSKS;
 
-        const diffCard = document.getElementById('res-ipk-diff-card');
-        const diffText = document.getElementById('res-ipk-diff');
-        const statusBox = document.getElementById('pred-status');
+            // Display results block
+            const tgtResultBox = document.getElementById('tgt-result-box');
+            if (tgtResultBox) tgtResultBox.style.display = 'block';
+            
+            // Update Grid values
+            const resTgtTarget = document.getElementById('res-tgt-target');
+            const resTgtCurrent = document.getElementById('res-tgt-current');
+            const resTgtSksDone = document.getElementById('res-tgt-sks-done');
+            const resTgtSksLeft = document.getElementById('res-tgt-sks-left');
+            const resTgtIps = document.getElementById('res-tgt-ips');
 
-        diffCard.className = 'pred-card';
-        if (diff > 0) {
-            diffCard.classList.add('up');
-            diffText.textContent = '+' + diff.toFixed(2);
-            statusBox.className = 'prediksi-status positive';
-            statusBox.innerHTML = '<i class="ph ph-trend-up"></i> Pertahankan kerjamu! IPK-mu diprediksi akan naik.';
-        } else if (diff < 0) {
-            diffCard.classList.add('down');
-            diffText.textContent = diff.toFixed(2);
-            statusBox.className = 'prediksi-status negative';
-            statusBox.innerHTML = '<i class="ph ph-trend-down"></i> Hati-hati! IPK-mu diprediksi akan turun.';
-        } else {
-            diffText.textContent = '0.00';
-            statusBox.className = 'prediksi-status';
-            statusBox.innerHTML = '<i class="ph ph-minus"></i> IPK-mu diprediksi stabil.';
-        }
-    });
+            if (resTgtTarget) resTgtTarget.textContent = targetIpk.toFixed(2);
+            if (resTgtCurrent) resTgtCurrent.textContent = ipkLama.toFixed(2);
+            if (resTgtSksDone) resTgtSksDone.textContent = sksLama;
+            if (resTgtSksLeft) resTgtSksLeft.textContent = sisaSKS;
+            if (resTgtIps) resTgtIps.textContent = ipsDibutuhkan.toFixed(2);
 
-    // --- 7. TARGET IPK LOGIC ---
-    document.getElementById('btn-target').addEventListener('click', () => {
-        const ipkLama = parseFloat(document.getElementById('tgt-ipk-lama').value);
-        const sksLama = parseInt(document.getElementById('tgt-sks-lama').value);
-        const sisaSmt = parseInt(document.getElementById('tgt-sisa-smt').value);
-        const sksPerSmt = parseInt(document.getElementById('tgt-sks-per-smt').value);
-        const targetIpk = parseFloat(document.getElementById('tgt-ipk-target').value);
+            // Evaluate Status
+            const statusBox = document.getElementById('res-tgt-status-box');
+            const diffText = document.getElementById('res-tgt-diff');
+            const reasonText = document.getElementById('res-tgt-reason');
 
-        if (isNaN(ipkLama) || isNaN(sksLama) || isNaN(sisaSmt) || isNaN(sksPerSmt) || isNaN(targetIpk)) {
-            alert('Harap isi semua kolom Target IPK dengan angka yang valid.');
-            return;
-        }
+            let diffClass = '';
+            let status = '';
+            let reason = '';
 
-        const totalSksTarget = sksLama + (sisaSmt * sksPerSmt);
-        const totalBobotTarget = targetIpk * totalSksTarget;
-        const bobotLama = ipkLama * sksLama;
+            if (ipsDibutuhkan <= 3.00) {
+                diffClass = 'status-very-easy';
+                status = '✅ Sangat Realistis';
+                reason = 'Target sangat wajar dan cukup mudah untuk dicapai di sisa semester.';
+            } else if (ipsDibutuhkan <= 3.30) {
+                diffClass = 'status-easy';
+                status = '✅ Realistis';
+                reason = 'Target ini masih wajar dan bisa dicapai dengan usaha normal yang konsisten.';
+            } else if (ipsDibutuhkan <= 3.60) {
+                diffClass = 'status-medium'; 
+                status = '⚠️ Menantang';
+                reason = 'Membutuhkan fokus dan usaha ekstra keras untuk mencapai rata-rata IPS ini.';
+            } else if (ipsDibutuhkan <= 4.00) {
+                diffClass = 'status-hard'; 
+                status = '🔥 Sangat Sulit';
+                reason = 'Mendekati nilai sempurna. Anda hampir tidak boleh melakukan kesalahan di sisa studi.';
+            } else {
+                diffClass = 'status-impossible'; 
+                status = '❌ Tidak Mungkin Dicapai';
+                reason = `Karena IPS rata-rata yang dibutuhkan (${ipsDibutuhkan.toFixed(2)}) melebihi batas maksimum 4.00.`;
+            }
 
-        const bobotDibutuhkan = totalBobotTarget - bobotLama;
-        const sksDibutuhkan = sisaSmt * sksPerSmt;
-        const ipsDibutuhkan = bobotDibutuhkan / sksDibutuhkan;
-
-        document.getElementById('tgt-result-box').style.display = 'block';
-        document.getElementById('res-tgt-ips').textContent = ipsDibutuhkan.toFixed(2);
-
-        const diffBadge = document.getElementById('res-tgt-diff');
-        let diffClass = '';
-        let diffText = '';
-
-        if (ipsDibutuhkan <= 0) {
-            diffClass = 'diff-easy';
-            diffText = 'Sangat Aman';
-        } else if (ipsDibutuhkan <= 3.00) {
-            diffClass = 'diff-easy';
-            diffText = 'Sangat Mudah';
-        } else if (ipsDibutuhkan <= 3.50) {
-            diffClass = 'diff-medium';
-            diffText = 'Realistis';
-        } else if (ipsDibutuhkan <= 3.85) {
-            diffClass = 'diff-hard';
-            diffText = 'Sulit';
-        } else if (ipsDibutuhkan <= 4.00) {
-            diffClass = 'diff-impossible';
-            diffText = 'Sangat Sulit';
-        } else {
-            diffClass = 'diff-impossible';
-            diffText = 'Mustahil (> 4.00)';
-        }
-
-        diffBadge.className = `tgt-difficulty ${diffClass}`;
-        diffBadge.textContent = diffText;
-
-        // Render semester breakdown
-        const breakdownContainer = document.getElementById('tgt-breakdown');
-        let breakdownHtml = '<h4>Simulasi Rincian Semester:</h4><div class="breakdown-grid">';
-
-        for (let i = 1; i <= sisaSmt; i++) {
-            breakdownHtml += `
-                <div class="breakdown-item">
-                    <span>Semester Ke-${i}</span>
-                    <strong>IPS ${ipsDibutuhkan > 4 ? 'X' : ipsDibutuhkan.toFixed(2)}</strong>
-                </div>
-            `;
-        }
-        breakdownHtml += '</div>';
-        breakdownContainer.innerHTML = breakdownHtml;
-    });
+            if (statusBox) statusBox.className = `tgt-status-box ${diffClass}`;
+            if (diffText) diffText.textContent = status;
+            if (reasonText) reasonText.textContent = reason;
+        });
+    }
 
 });

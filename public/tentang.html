@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang IPSmart - Kalkulator IPS/IPK Mahasiswa</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo" style="text-decoration: none;">
+                <i class="ph-fill ph-graduation-cap"></i>
+                <span>IPSmart</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html#beranda" class="nav-link">Beranda</a></li>
+                <li><a href="index.html?tab=tab-kalkulator#tools-section" class="nav-link">Kalkulator IPS</a></li>
+                <li><a href="index.html?tab=tab-prediksi#tools-section" class="nav-link">Prediksi IPK</a></li>
+                <li><a href="index.html?tab=tab-target#tools-section" class="nav-link">Target IPK</a></li>
+                <li><a href="tentang.html" class="nav-link active">Tentang</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button id="theme-toggle" class="icon-btn" aria-label="Toggle Dark Mode">
+                    <i class="ph ph-moon" id="theme-icon"></i>
+                </button>
+                <a href="#" class="btn btn-outline">Masuk</a>
+                <a href="#" class="btn btn-primary">Daftar Gratis</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="about-section">
+        <div class="about-container">
+            <!-- Header -->
+            <div class="about-header">
+                <h2>Tentang <span>IPSmart</span></h2>
+                <p>Platform asisten akademik modern yang dirancang untuk mempermudah perhitungan, simulasi, dan perancangan strategi pencapaian indeks prestasi Anda.</p>
+            </div>
+
+            <!-- Grid Content -->
+            <div class="about-grid">
+                <!-- Left: Platform Info -->
+                <div class="about-info-card">
+                    <h3><i class="ph-fill ph-info"></i> Apa itu IPSmart?</h3>
+                    <p>
+                        IPSmart lahir dari kebutuhan mahasiswa untuk memetakan capaian akademik secara praktis, fleksibel, dan interaktif. Dengan antarmuka yang bersih serta sistem perhitungan yang instan, platform ini membantu Anda fokus menyusun strategi tanpa perlu dipusingkan dengan hitungan rumus manual.
+                    </p>
+                    <p>
+                        Kami percaya bahwa pengelolaan target akademik yang terencana dengan baik adalah kunci utama bagi setiap mahasiswa untuk meraih kelulusan impian dengan hasil yang optimal.
+                    </p>
+
+                    <h3 style="margin-top: 2rem;"><i class="ph-fill ph-circles-three-plus"></i> Fitur Unggulan Kami</h3>
+                    <div class="features-grid">
+                        <div class="about-feat-card">
+                            <i class="ph ph-calculator"></i>
+                            <strong>Kalkulator IPS</strong>
+                            <span>Hitung IPS semester Anda secara otomatis berdasarkan bobot nilai dan jumlah SKS mata kuliah.</span>
+                        </div>
+                        <div class="about-feat-card">
+                            <i class="ph ph-trend-up"></i>
+                            <strong>Simulasi Nilai</strong>
+                            <span>Uji coba berbagai skenario nilai untuk mata kuliah yang hasilnya belum dirilis oleh dosen.</span>
+                        </div>
+                        <div class="about-feat-card">
+                            <i class="ph ph-chart-pie-slice"></i>
+                            <strong>Prediksi IPK</strong>
+                            <span>Dapatkan estimasi kumulatif IPK Anda dengan menggabungkan riwayat IPK lama dengan proyeksi semester ini.</span>
+                        </div>
+                        <div class="about-feat-card">
+                            <i class="ph ph-target"></i>
+                            <strong>Target IPK</strong>
+                            <span>Kalkulasi rata-rata IPS yang wajib diraih di semester tersisa guna mencapai target IPK kelulusan tertentu.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Grade Standards -->
+                <div class="grade-table-card">
+                    <h3><i class="ph-fill ph-list-numbers"></i> Standar Penilaian</h3>
+                    <p>Dalam memproses seluruh penghitungan IPS dan IPK di platform ini, kami mengacu pada standar konversi bobot nilai akademik sebagai berikut:</p>
+                    
+                    <table class="grade-table">
+                        <thead>
+                            <tr>
+                                <th>Grade</th>
+                                <th>Bobot</th>
+                                <th>Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="grade-badge grade-a">A</span></td>
+                                <td><strong>4.00</strong></td>
+                                <td>Istimewa</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-a">A-</span></td>
+                                <td><strong>3.50</strong></td>
+                                <td>Sangat Baik</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-b">B+</span></td>
+                                <td><strong>3.25</strong></td>
+                                <td>Lebih dari Baik</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-b">B</span></td>
+                                <td><strong>3.00</strong></td>
+                                <td>Baik</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-b">B-</span></td>
+                                <td><strong>2.75</strong></td>
+                                <td>Cukup Baik</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-c">C+</span></td>
+                                <td><strong>2.50</strong></td>
+                                <td>Lebih dari Cukup</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-c">C</span></td>
+                                <td><strong>2.00</strong></td>
+                                <td>Cukup</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-d">D</span></td>
+                                <td><strong>1.00</strong></td>
+                                <td>Kurang</td>
+                            </tr>
+                            <tr>
+                                <td><span class="grade-badge grade-e">E</span></td>
+                                <td><strong>0.00</strong></td>
+                                <td>Gagal</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 IPSmart. Dibuat untuk mahasiswa.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
