@@ -159,10 +159,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 3. COMMON GRADE DATA ---
-    const gradePoints = {
+    const defaultGradePoints = {
         'A': 4.00, 'A-': 3.50, 'B+': 3.25, 'B': 3.00, 
         'B-': 2.75, 'C+': 2.50, 'C': 2.00, 'D': 1.00, 'E': 0.00
     };
+    
+    let gradePoints = { ...defaultGradePoints };
+    const savedScale = localStorage.getItem('customGradePoints');
+    if (savedScale) {
+        try {
+            gradePoints = JSON.parse(savedScale);
+        } catch(e) {
+            console.error("Failed to parse custom grade points");
+        }
+    }
 
     const getGradeOptions = () => {
         let options = '<option value="" disabled selected>Pilih Nilai</option>';
@@ -179,6 +189,119 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         return options;
     };
+
+    // --- 3.5 MODAL PENGATURAN SKALA NILAI ---
+    const scaleModal = document.getElementById('scale-modal');
+    const settingsScaleBtn = document.getElementById('settings-scale-btn');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const addScaleBtn = document.getElementById('add-scale-btn');
+    const resetScaleBtn = document.getElementById('reset-scale-btn');
+    const saveScaleBtn = document.getElementById('save-scale-btn');
+    const scaleList = document.getElementById('scale-list');
+
+    let tempGradePoints = { ...gradePoints };
+
+    const renderScaleList = () => {
+        if (!scaleList) return;
+        scaleList.innerHTML = '';
+        for (const [grade, point] of Object.entries(tempGradePoints)) {
+            addScaleRow(grade, point);
+        }
+    };
+
+    const addScaleRow = (grade = '', point = '') => {
+        if (!scaleList) return;
+        const row = document.createElement('div');
+        row.className = 'scale-row';
+        row.innerHTML = `
+            <input type="text" class="scale-input scale-grade" placeholder="Huruf (contoh: A)" value="${grade}">
+            <input type="number" step="0.01" class="scale-input scale-point" placeholder="Bobot (contoh: 4.0)" value="${point}">
+            <button class="icon-btn remove-scale-btn" style="color: var(--danger);"><i class="ph ph-trash"></i></button>
+        `;
+        
+        row.querySelector('.remove-scale-btn').addEventListener('click', () => {
+            row.remove();
+        });
+        
+        scaleList.appendChild(row);
+    };
+
+    if (settingsScaleBtn && scaleModal) {
+        settingsScaleBtn.addEventListener('click', () => {
+            tempGradePoints = { ...gradePoints };
+            renderScaleList();
+            scaleModal.classList.add('active');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            scaleModal.classList.remove('active');
+        });
+
+        addScaleBtn.addEventListener('click', () => {
+            addScaleRow('', '');
+        });
+
+        resetScaleBtn.addEventListener('click', () => {
+            tempGradePoints = { ...defaultGradePoints };
+            renderScaleList();
+        });
+
+        saveScaleBtn.addEventListener('click', () => {
+            const rows = scaleList.querySelectorAll('.scale-row');
+            const newScale = {};
+            let isValid = true;
+            
+            rows.forEach(row => {
+                const gradeInput = row.querySelector('.scale-grade');
+                const pointInput = row.querySelector('.scale-point');
+                const grade = gradeInput.value.trim().toUpperCase();
+                const point = parseFloat(pointInput.value);
+                
+                if (grade && !isNaN(point)) {
+                    newScale[grade] = point;
+                } else {
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                alert("Mohon isi semua huruf mutu dan bobot nilai dengan format yang benar.");
+                return;
+            }
+
+            if (Object.keys(newScale).length === 0) {
+                alert("Skala nilai tidak boleh kosong.");
+                return;
+            }
+
+            gradePoints = newScale;
+            localStorage.setItem('customGradePoints', JSON.stringify(gradePoints));
+            scaleModal.classList.remove('active');
+            
+            // Update dropdown options in Calculator
+            const courseSelects = document.querySelectorAll('.grade-select');
+            if (courseSelects) {
+                courseSelects.forEach(select => {
+                    const currentVal = select.value;
+                    select.innerHTML = getGradeOptions();
+                    
+                    // Try to keep previous selection if it still matches a point value
+                    if (currentVal !== "") {
+                        let matchFound = false;
+                        for (let opt of select.options) {
+                            if (opt.value === currentVal) {
+                                matchFound = true;
+                                break;
+                            }
+                        }
+                        select.value = matchFound ? currentVal : "";
+                    } else {
+                        select.value = "";
+                    }
+                });
+            }
+        });
+    }
 
     // --- 4. KALKULATOR IPS LOGIC ---
     const courseList = document.getElementById('course-list');

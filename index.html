@@ -255,11 +255,16 @@
                     </div>
                     
                     <div class="tools-actions">
-                        <button id="add-course-btn" class="btn btn-outline">
-                            <i class="ph ph-plus"></i> Tambah Mata Kuliah
-                        </button>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button id="add-course-btn" class="btn btn-outline">
+                                <i class="ph ph-plus"></i> Tambah Mata Kuliah
+                            </button>
+                            <button id="settings-scale-btn" class="btn btn-outline">
+                                <i class="ph ph-gear"></i> Atur Skala Nilai
+                            </button>
+                        </div>
                         <button id="calculate-btn" class="btn btn-primary">
-                            Hitung IPS <i class="ph ph-calculator"></i>
+                            Hitung IPS <i class="ph ph-arrow-right"></i>
                         </button>
                     </div>
                     
@@ -404,6 +409,29 @@
             </div>
         </div>
     </section>
+
+    <!-- Modal Kustomisasi Skala Nilai -->
+    <div id="scale-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Pengaturan Skala Nilai</h3>
+                <button id="close-modal-btn" class="icon-btn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-desc">Sesuaikan huruf mutu dan bobot nilai dengan standar universitas Anda.</p>
+                <div class="scale-list" id="scale-list">
+                    <!-- JS akan mengisi baris disini -->
+                </div>
+                <button id="add-scale-btn" class="btn btn-outline btn-sm" style="width: 100%; margin-top: 10px; justify-content: center;">
+                    <i class="ph ph-plus"></i> Tambah Nilai
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button id="reset-scale-btn" class="btn btn-danger-outline">Reset ke Default</button>
+                <button id="save-scale-btn" class="btn btn-primary">Simpan Pengaturan</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
